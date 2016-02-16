@@ -1,6 +1,6 @@
-# Tournament Planner
+# Catalog App
 
-Tournament Planner is a planner to arrange Swiss Tournament style games.
+Catalog Webapp project to practice Python, Flask and Oauth 2.0
 
 
 ## Quick start
@@ -8,23 +8,19 @@ Tournament Planner is a planner to arrange Swiss Tournament style games.
 Several quick start options are available:
 
 * Download [the latest Vagrant](https://www.vagrantup.com/downloads.html) and install.
-* Clone the repo: `git clone https://github.com/softage0/udacity-fsnd-p2.git`.
+* Clone the repo: `git clone https://github.com/softage0/catalog-webapp.git`.
 * Run the following code on the cloned repo:
 ```
-$ cd vagrant
 $ vagrant up (It would take several minutes to install and setup the relevant environment.)
 ```
 * Run the following code to setup the initial database:
 ```
 $ vagrant ssh
-vagrant$ cd /vagrant/tournament
-vagrant$ psql
-psql$ create database tournament
-psql$ /c tournament
-psql$ /i tournament.sql
-psql$ /q
+vagrant$ cd /vagrant/catalog
+/vagrant/catalog$ python database_setup.py
+/vagrant/catalog$ python dummy_db_generator.py
 ```
-* Run tournament_test.py for unit test
+* Run application.py
 ```
-vagrant$ python tournament_test.py
+/vagrant/catalog$ python __init__.py
 ```

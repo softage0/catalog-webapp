@@ -1,3 +1,4 @@
+import config
 import datetime
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -15,6 +16,8 @@ class User(Base):
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
+    category = relationship("Category", cascade="all, delete-orphan")
+    categoryItems = relationship("CategoryItem", cascade="all, delete-orphan")
 
     @property
     def serialize(self):
@@ -35,6 +38,7 @@ class Category(Base):
     name = Column(String(250), nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+    categoryItems = relationship("CategoryItem", cascade="all, delete-orphan")
 
     @property
     def serialize(self):
@@ -70,5 +74,5 @@ class CategoryItem(Base):
         }
 
 
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine(config.DB_URL)
 Base.metadata.create_all(engine)

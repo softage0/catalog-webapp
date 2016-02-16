@@ -1,3 +1,4 @@
+import config
 import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from sqlalchemy import create_engine, desc
@@ -6,7 +7,7 @@ from database_setup import Base, User, Category, CategoryItem
 
 app = Flask(__name__)
 
-engine = create_engine('postgres://oiuhydyuipflby:wA2Dn17rl-Y_ckX6krEHMcHITG@ec2-54-83-29-133.compute-1.amazonaws.com:5432/d8quo2rmar6mro')
+engine = create_engine(config.DB_URL)
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -95,7 +96,7 @@ def delete_category_item(category_name, category_item_title):
                                category_item_title=category_item_title)
 
 
-# if __name__ == '__main__':
-app.secret_key = 'super_secret_key'
-app.debug = True
-# app.run(host='0.0.0.0', port=8000)
+if __name__ == '__main__':
+    app.secret_key = 'super_secret_key'
+    app.debug = True
+    app.run(host='0.0.0.0', port=5000)

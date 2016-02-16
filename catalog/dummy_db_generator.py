@@ -1,9 +1,10 @@
+import config
 import random
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, User, Category, CategoryItem
 
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine(config.DB_URL)
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
