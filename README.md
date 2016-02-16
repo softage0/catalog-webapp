@@ -16,11 +16,11 @@ $ vagrant up (It would take several minutes to install and setup the relevant en
 * Run the following code to setup the initial database:
 ```
 $ vagrant ssh
-vagrant$ cd /vagrant/catalog
-/vagrant/catalog$ python database_setup.py
-/vagrant/catalog$ python dummy_db_generator.py
+vagrant$ cd /vagrant
+vagrant$ python /catalog/database_setup.py
+vagrant$ python /catalog/dummy_db_generator.py
 ```
-* Run application.py
+* Run runserver.py
 ```
-/vagrant/catalog$ python __init__.py
+/vagrant/catalog$ python runserver.py
 ```
