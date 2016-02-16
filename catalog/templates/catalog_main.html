@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active">Categories <span class="sr-only">(current)</span></li>
+                {% for category in categories %}
+                <li><a href="{{url_for('category_items', category_name=category.name)}}">{{category.name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-md-10 main">
+             <a href="{{url_for('new_category_item')}}">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <h3>Add Item</h3>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </a>
+
+            <h3 class="page-header">{{title}}</h3>
+
+            {% for item in items %}
+            <a href="{{url_for('category_item_description', category_name=item.category.name,
+             category_item_title=item.title)}}">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <h3>{{item.title}} {% if main %}({{item.category.name}}){% endif %}</h3>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
