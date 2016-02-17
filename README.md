@@ -6,9 +6,9 @@ You can simply access [this Heroku server](https://cryptic-wave-60279.herokuapp.
 
 #### Login functionality only works on the Heroku server for security issues.
 
-Please issue 'client_secrets.json' for [Google](https://console.developers.google.com), and APP_ID, APP_SECRET for [Facebook](https://developers.facebook.com) if you want to test it on local machines.
+Please issue `client_secrets.json` for [Google](https://console.developers.google.com), and `APP_ID`, `APP_SECRET` for [Facebook](https://developers.facebook.com) if you want to test it on local machines.
 
-Then replace catalog/client_secrets.json for Google, or modify config.py for Facebook login.
+Then replace `catalog/config/client_secrets.json` for Google, or modify `catalog/config/config.py` for Facebook login.
 
 
 ## Quick start
