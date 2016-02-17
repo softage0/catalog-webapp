@@ -12,6 +12,7 @@
         </div>
 
         <div class="col-sm-9 col-md-10 main">
+            {% if 'username' in session %}
              <a href="{{url_for('new_category_item')}}">
                 <div class="row">
                     <div class="col-md-1"></div>
@@ -21,6 +22,7 @@
                     <div class="col-md-1"></div>
                 </div>
             </a>
+            {% endif %}
 
             <h3 class="page-header">{{title}}</h3>
 

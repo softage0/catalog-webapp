@@ -15,8 +15,10 @@
                 </div>
             </a>
 
+            {% if 'username' in session and item.user_id == session['user_id'] %}
             <a href="{{url_for('edit_category_item', category_name=category_name, category_item_title=item.title)}}">Edit</a>
             <a href="{{url_for('delete_category_item', category_name=category_name, category_item_title=item.title)}}">Delete</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -13,14 +13,14 @@ session = DBSession()
 
 
 # Delete existing DB
-session.query(User).delete()
-session.query(Category).delete()
 session.query(CategoryItem).delete()
+session.query(Category).delete()
+session.query(User).delete()
 session.commit()
 
 
 # Create dummy user
-admin = User(name="admin", email="softage0@gmail.com",
+admin = User(name="admin", email="softage3@gmail.com",
              picture='https://lh5.googleusercontent.com/-rXt7YCTSUS8/AAAAAAAAAAI/AAAAAAAAAEk/tKXxlyexJZw/photo.jpg')
 session.add(admin)
 session.commit()

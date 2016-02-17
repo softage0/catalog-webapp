@@ -15,8 +15,7 @@ from . import session
 
 
 def create_user(login_session):
-    user = User(name=login_session['username'], email=login_session[
-                   'email'], picture=login_session['picture'])
+    user = User(name=login_session['username'], email=login_session['email'], picture=login_session['picture'])
     session.add(user)
     session.commit()
     user = session.query(User).filter_by(email=login_session['email']).one()
@@ -39,9 +38,10 @@ def get_user_id(email):
 # Create anti-forgery state token
 @app.route('/login')
 def show_login():
-    state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in xrange(32))
     login_session['state'] = state
-    return render_template("login.html", STATE=state, config=config)
+    return state
+    # return render_template("login.html", STATE=state, config=config)
 
 
 # Disconnect based on provider

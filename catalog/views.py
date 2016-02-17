@@ -2,8 +2,9 @@ import datetime
 
 from sqlalchemy import desc
 from flask import render_template, request, redirect, url_for, flash
-from database_setup import User, Category, CategoryItem
+from flask import session as login_session
 
+from database_setup import Category, CategoryItem
 from . import app
 from . import session
 
@@ -33,9 +34,8 @@ def category_item_description(category_name, category_item_title):
 @app.route('/catalog/new', methods=['GET', 'POST'])
 def new_category_item():
     if request.method == 'POST':
-        # admin = session.query(User).one()
         item = CategoryItem(title=request.form['title'], description=request.form['description'],
-                            category_id=request.form['category_id'], user=admin)
+                            category_id=request.form['category_id'], user_id=login_session['user_id'])
         session.add(item)
         session.commit()
         flash(item.title + " added!")
