@@ -22,5 +22,5 @@ vagrant$ python /catalog/dummy_db_generator.py
 ```
 * Run runserver.py
 ```
-/vagrant/catalog$ python runserver.py
+vagrant$ python runserver.py
 ```

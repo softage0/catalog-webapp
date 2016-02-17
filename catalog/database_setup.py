@@ -1,9 +1,11 @@
-import config
 import datetime
+
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
+
+from config import config
 
 Base = declarative_base()
 

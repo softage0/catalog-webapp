@@ -1,8 +1,10 @@
-import config
 import random
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from database_setup import Base, User, Category, CategoryItem
+from config import config
 
 engine = create_engine(config.DB_URL)
 Base.metadata.bind = engine

@@ -1,6 +1,6 @@
 from . import app
 from . import session
-from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask import jsonify
 from database_setup import User, Category, CategoryItem
 
 

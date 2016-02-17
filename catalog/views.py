@@ -1,9 +1,11 @@
 import datetime
+
+from sqlalchemy import desc
+from flask import render_template, request, redirect, url_for, flash
+from database_setup import User, Category, CategoryItem
+
 from . import app
 from . import session
-from sqlalchemy import desc
-from flask import render_template, request, redirect, url_for, flash, jsonify
-from database_setup import User, Category, CategoryItem
 
 
 @app.route('/')
