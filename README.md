@@ -2,6 +2,7 @@
 
 Catalog Webapp project to practice Python, Flask and Oauth 2.0
 
+You can simply access [this Heroku server](https://cryptic-wave-60279.herokuapp.com/) and test it.
 
 ## Quick start
 
@@ -39,7 +40,7 @@ vagrant$ foreman start web
 It uses Heroku Postgres database but it can be switched to local SQLite database to develop offline by the following command.
 
 * Switch DB_URL on catalog/config/config.py:
-DB_URL="postgres://..." -> DB_URL="sqlite:///catalog/catalog.db" 
+> DB_URL="postgres://..." -> DB_URL="sqlite:///catalog/catalog.db" 
 
 * Setup local dummy database
 ```
