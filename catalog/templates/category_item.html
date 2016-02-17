@@ -1,24 +1,25 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
     <div class="row">
-        <div class="main">
-            <h3 class="page-header">{{item.title}}</h3>
+        <div class="col-sm-3 col-md-2 sidebar">
+            {% include "categories_sidebar.html" %}
+        </div>
 
-            <a href="{{url_for('catalog_main')}}">
-                <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10">
-                        <h3>{{item.description}}</h3>
-                    </div>
-                    <div class="col-md-1"></div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{item.title}}</h3>
                 </div>
-            </a>
-
-            {% if 'username' in session and item.user_id == session['user_id'] %}
-            <a href="{{url_for('edit_category_item', category_name=category_name, category_item_title=item.title)}}">Edit</a>
-            <a href="{{url_for('delete_category_item', category_name=category_name, category_item_title=item.title)}}">Delete</a>
-            {% endif %}
+                <div class="panel-body">
+                    <h3>{{item.description}}</h3>
+                </div>
+                {% if 'username' in session and item.user_id == session['user_id'] %}
+                <div class="panel-footer">
+                    <a href="{{url_for('edit_category_item', category_name=category_name, category_item_title=item.title)}}">Edit</a>
+                    <a href="{{url_for('delete_category_item', category_name=category_name, category_item_title=item.title)}}">Delete</a>
+                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

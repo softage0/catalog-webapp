@@ -8,7 +8,7 @@ from flask import render_template, request, redirect, url_for, make_response, fl
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 
-from database_setup import User
+from database_setup import User, Category
 from config import config
 from . import app
 from . import session
@@ -40,7 +40,8 @@ def get_user_id(email):
 def show_login():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in xrange(32))
     login_session['state'] = state
-    return render_template("login.html", STATE=state, config=config)
+    categories = session.query(Category).all()
+    return render_template("login.html", STATE=state, config=config, categories=categories)
 
 
 # Disconnect based on provider
@@ -227,7 +228,7 @@ def gconnect():
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;' \
               'border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
-    flash("you are now logged in as %s" % login_session['username'])
+    flash("You are now logged in as %s." % login_session['username'])
     print "done!"
     return output
 

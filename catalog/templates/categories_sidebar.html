@@ -1,0 +1,11 @@
+<ul class="nav nav-sidebar">
+    <li><a href="{{url_for('catalog_main')}}"><strong>Categories</strong></a></li>
+    {% for category in categories %}
+    {% if category.name == category_name %}
+    <li class="active"><a href="{{url_for('category_items', category_name=category.name)}}">{{category.name}}</a>
+    </li>
+    {% else %}
+    <li><a href="{{url_for('category_items', category_name=category.name)}}">{{category.name}}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>

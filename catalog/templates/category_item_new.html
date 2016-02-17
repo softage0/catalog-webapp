@@ -1,30 +1,41 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
     <div class="row">
-        <div class="main">
-            <h3 class="page-header">Add Item</h3>
+        <div class="col-sm-3 col-md-2 sidebar">
+            {% include "categories_sidebar.html" %}
+        </div>
 
-            <form action="{{url_for('new_category_item')}}" method='POST'>
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input class="form-control" name="title" placeholder="Title">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add Item</h3>
                 </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input class="form-control" name="description" placeholder="Description">
+                <div class="panel-body form-padding">
+                    <form class="form-horizontal" action="{{url_for('new_category_item')}}" method='POST'>
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input id="title" class="form-control" name="title" placeholder="Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <input id="description" class="form-control" name="description"
+                                       placeholder="Description">
+                            </div>
+                            <div class="form-group">
+                                <label for="category_id">Category</label>
+                                <br>
+                                <select id="category_id" class="form-control" name="category_id">
+                                    {% for category in categories %}
+                                    <option value="{{category.id}}">{{category.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-default" id="submit">Submit</button>
+                        </fieldset>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="category_id">Category</label>
-                    <br>
-                    <select class="form-control" name="category_id">
-                        {% for category in categories %}
-                        <option value="{{category.id}}">{{category.name}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-default" id="submit">Submit</button>
-            </form>
+            </div>
         </div>
     </div>
 {% endblock %}

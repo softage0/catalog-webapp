@@ -1,24 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="//apis.google.com/js/platform.js?onload=start"></script>
-    <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
-</head>
-<body>
-<!-- GOOGLE PLUS SIGN IN -->
-<div id="signInButton">
-    <span class="g-signin"
-          data-scope="openid email"
-          data-clientid="{{config.GOOGLE_CLIENT_ID}}"
-          data-redirecturi="postmessage"
-          data-accesstype="offline"
-          data-cookiepolicy="single_host_origin"
-          data-callback="signInCallback">
-    </span>
+{% extends "main.html" %}
+{% block content %}
+<!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
+<script src="//apis.google.com/js/platform.js?onload=start"></script>
+<!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+
+<div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+        {% include "categories_sidebar.html" %}
+    </div>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Login</h3>
+            </div>
+            <div class="panel-body form-padding">
+                <!-- GOOGLE PLUS SIGN IN -->
+                <div id="signInButton">
+                    <span class="g-signin"
+                          data-scope="openid email"
+                          data-clientid="{{config.GOOGLE_CLIENT_ID}}"
+                          data-redirecturi="postmessage"
+                          data-accesstype="offline"
+                          data-cookiepolicy="single_host_origin"
+                          data-callback="signInCallback">
+                    </span>
+                </div>
+                <!--END GOOGLE PLUS SIGN IN -->
+
+                <!--FACEBOOK SIGN IN -->
+                <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
+                    <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
+                </fb:login-button>
+                <!--END FACEBOOK SIGN IN -->
+
+                <div id="result"></div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <script>
+    // js for Google login
     function signInCallback(authResult) {
         if (authResult['code']) {
             // Hide the sign-in button now that the user is authorized
@@ -33,7 +56,7 @@
                 success: function (result) {
                     // Handle or verify the server response if necessary.
                     if (result) {
-                        $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...')
+                        $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
                         setTimeout(function () {
                             window.location.href = "/";
                         }, 500);
@@ -51,16 +74,9 @@
             });
         }
     }
-</script>
-<!--END GOOGLE PLUS SIGN IN -->
 
-<!--FACEBOOK SIGN IN -->
-<button>
-    <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
-        <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
-    </fb:login-button>
-</button>
-<script>
+
+    // js for Facebook login
     window.fbAsyncInit = function () {
         FB.init({
             appId: '{{config.FB_APP_ID}}',
@@ -86,7 +102,7 @@
     // successful.  See statusChangeCallback() for when this call is made.
     function sendTokenToServer() {
         var access_token = FB.getAuthResponse()['accessToken'];
-        console.log(access_token)
+        console.log(access_token);
         console.log('Welcome!  Fetching your information.... ');
         FB.api('/me', function (response) {
             console.log('Successful login for: ' + response.name);
@@ -99,7 +115,7 @@
                 success: function (result) {
                     // Handle or verify the server response if necessary.
                     if (result) {
-                        $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...')
+                        $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
                         setTimeout(function () {
                             window.location.href = "/";
                         }, 1000);
@@ -112,9 +128,4 @@
         });
     }
 </script>
-<!--END FACEBOOK SIGN IN -->
-
-<div id="result"></div>
-
-</body>
-</html>
+{% endblock %}

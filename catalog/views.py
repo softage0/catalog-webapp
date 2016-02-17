@@ -13,7 +13,7 @@ from . import session
 def catalog_main():
     categories = session.query(Category).all()
     items = session.query(CategoryItem).order_by(desc(CategoryItem.modified_date)).limit(10).all()
-    return render_template('catalog_main.html', categories=categories, items=items, title='Lastest Items', main=True)
+    return render_template('catalog_main.html', categories=categories, items=items, title='Latest Items', main=True)
 
 
 @app.route('/catalog/<string:category_name>')
@@ -21,14 +21,16 @@ def category_items(category_name):
     categories = session.query(Category).all()
     items = session.query(CategoryItem).join(Category).filter(Category.name == category_name).all()
     title = category_name + ' Items (' + str(len(items)) + ' items)'
-    return render_template('catalog_main.html', categories=categories, items=items, title=title)
+    return render_template('catalog_main.html', categories=categories, items=items,
+                           title=title, category_name=category_name)
 
 
 @app.route('/catalog/<string:category_name>/<string:category_item_title>')
 def category_item_description(category_name, category_item_title):
+    categories = session.query(Category).all()
     item = session.query(CategoryItem).join(Category).filter(Category.name == category_name,
                                                              CategoryItem.title == category_item_title).all()[0]
-    return render_template('category_item.html', item=item, category_name=category_name)
+    return render_template('category_item.html', item=item, category_name=category_name, categories=categories)
 
 
 @app.route('/catalog/new', methods=['GET', 'POST'])
@@ -72,5 +74,6 @@ def delete_category_item(category_name, category_item_title):
         flash(item.title + " deleted!")
         return redirect(url_for('catalog_main'))
     else:
+        categories = session.query(Category).all()
         return render_template('category_item_delete.html', category_name=category_name,
-                               category_item_title=category_item_title)
+                               category_item_title=category_item_title, categories=categories)
