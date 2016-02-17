@@ -40,8 +40,7 @@ def get_user_id(email):
 def show_login():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in xrange(32))
     login_session['state'] = state
-    return state
-    # return render_template("login.html", STATE=state, config=config)
+    return render_template("login.html", STATE=state, config=config)
 
 
 # Disconnect based on provider
