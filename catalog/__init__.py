@@ -23,3 +23,6 @@ import account
 
 app.secret_key = 'super_secret_key'
 app.debug = True
+app.config.update(dict(
+    PREFERRED_URL_SCHEME='https'
+))
