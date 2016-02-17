@@ -4,6 +4,13 @@ Catalog Webapp project to practice Python, Flask and Oauth 2.0
 
 You can simply access [this Heroku server](https://cryptic-wave-60279.herokuapp.com/) and test it.
 
+#### Login functionality only works on the Heroku server for security issues.
+
+Please issue 'client_secrets.json' for [Google](https://console.developers.google.com), and APP_ID, APP_SECRET for [Facebook](https://developers.facebook.com) if you want to test it on local machines.
+
+Then replace catalog/client_secrets.json for Google, or modify config.py for Facebook login.
+
+
 ## Quick start
 
 Several quick start options are available:
@@ -32,7 +39,6 @@ On local machine, it can be tested just like Heroku environment by the following
 vagrant$ cd /vagrant
 vagrant$ foreman start web
 ```
-
 
 
 ## Setup Local Database for Offline Development
