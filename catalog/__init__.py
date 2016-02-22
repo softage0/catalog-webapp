@@ -22,7 +22,7 @@ session = DBSession()
 
 # It must be imported after app, session declared
 import views
-import json_endpoints
+import api_endpoints
 import account
 
 app.secret_key = 'super_secret_key'

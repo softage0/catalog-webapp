@@ -1,6 +1,6 @@
-# Catalog App
+# Item Catalog
 
-Catalog Webapp project to practice Python, Flask and Oauth 2.0
+Item Catalog Webapp project to practice Python, Flask and Oauth 2.0
 
 You can simply access [this Heroku server](https://cryptic-wave-60279.herokuapp.com/) and test it.
 
