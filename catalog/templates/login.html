@@ -56,9 +56,10 @@
                 success: function (result) {
                     // Handle or verify the server response if necessary.
                     if (result) {
+                        console.log(result);
                         $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
                         setTimeout(function () {
-                            window.location.href = "/";
+                            window.location.href = getUrlVars()["next"] ? decodeURIComponent(getUrlVars()["next"]) : "/";
                         }, 500);
 
                     } else if (authResult['error']) {
@@ -117,8 +118,8 @@
                     if (result) {
                         $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
                         setTimeout(function () {
-                            window.location.href = "/";
-                        }, 1000);
+                            window.location.href = getUrlVars()["next"] ? decodeURIComponent(getUrlVars()["next"]) : "/";
+                        }, 500);
 
                     } else {
                         $('#result').html('Failed to make a server-side call. Check your configuration and console.');
@@ -126,6 +127,19 @@
                 }
             });
         });
+    }
+
+    function getUrlVars()
+    {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
     }
 </script>
 {% endblock %}

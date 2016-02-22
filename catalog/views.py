@@ -7,6 +7,7 @@ from flask import session as login_session
 from database_setup import Category, CategoryItem
 from . import app
 from . import session
+from . import restriction
 
 
 @app.route('/')
@@ -34,6 +35,7 @@ def category_item_description(category_name, category_item_title):
 
 
 @app.route('/catalog/new', methods=['GET', 'POST'])
+@restriction.login_required
 def new_category_item():
     if request.method == 'POST':
         item = CategoryItem(title=request.form['title'], description=request.form['description'],
@@ -48,9 +50,13 @@ def new_category_item():
 
 
 @app.route('/catalog/<string:category_name>/<string:category_item_title>/edit', methods=['GET', 'POST'])
-def edit_category_item(category_name, category_item_title):
-    item = session.query(CategoryItem).join(Category).filter(Category.name == category_name,
-                                                             CategoryItem.title == category_item_title).all()[0]
+@restriction.owner_required
+def edit_category_item(category_name, category_item_title, item):
+    print(item)
+    if not item:
+        item = session.query(CategoryItem).join(Category) \
+            .filter(Category.name == category_name,
+                    CategoryItem.title == category_item_title).all()[0]
     if request.method == 'POST':
         item.modified_date = datetime.datetime.now()
         item.title = request.form['title']
@@ -65,10 +71,12 @@ def edit_category_item(category_name, category_item_title):
 
 
 @app.route('/catalog/<string:category_name>/<string:category_item_title>/delete', methods=['GET', 'POST'])
-def delete_category_item(category_name, category_item_title):
+@restriction.owner_required
+def delete_category_item(category_name, category_item_title, item):
     if request.method == 'POST':
-        item = session.query(CategoryItem).join(Category).filter(Category.name == category_name,
-                                                                 CategoryItem.title == category_item_title).all()[0]
+        if not item:
+            item = session.query(CategoryItem).join(Category).filter(Category.name == category_name,
+                                                                     CategoryItem.title == category_item_title).all()[0]
         session.delete(item)
         session.commit()
         flash(item.title + " deleted!")
