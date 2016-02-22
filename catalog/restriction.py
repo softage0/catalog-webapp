@@ -8,6 +8,11 @@ from . import session
 
 
 def login_required(f):
+    """
+    Login status check for function 'f'
+    Args:
+        f: function that login status needs to be checked
+    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'username' in login_session:
@@ -19,6 +24,11 @@ def login_required(f):
 
 
 def owner_required(f):
+    """
+    Item owner check for function 'f'
+    Args:
+        f: function that item owner needs to be checked
+    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         item = session.query(CategoryItem).join(Category)\

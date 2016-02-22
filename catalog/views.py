@@ -12,6 +12,7 @@ from . import restriction
 
 @app.route('/')
 def catalog_main():
+    """ Main page of Item Catalog """
     categories = session.query(Category).all()
     items = session.query(CategoryItem).order_by(desc(CategoryItem.modified_date)).limit(10).all()
     return render_template('catalog_main.html', categories=categories, items=items, title='Latest Items', main=True)
@@ -19,6 +20,11 @@ def catalog_main():
 
 @app.route('/catalog/<string:category_name>')
 def category_items(category_name):
+    """
+    Item list of each category
+    Args:
+        category_name: category name of the item list
+    """
     categories = session.query(Category).all()
     items = session.query(CategoryItem).join(Category).filter(Category.name == category_name).all()
     title = category_name + ' Items (' + str(len(items)) + ' items)'
@@ -28,6 +34,12 @@ def category_items(category_name):
 
 @app.route('/catalog/<string:category_name>/<string:category_item_title>')
 def category_item_description(category_name, category_item_title):
+    """
+    Description of each category item
+    Args:
+        category_name: name of category
+        category_item_title: name of item
+    """
     categories = session.query(Category).all()
     item = session.query(CategoryItem).join(Category).filter(Category.name == category_name,
                                                              CategoryItem.title == category_item_title).all()[0]
@@ -37,6 +49,7 @@ def category_item_description(category_name, category_item_title):
 @app.route('/catalog/new', methods=['GET', 'POST'])
 @restriction.login_required
 def new_category_item():
+    """ Page to create new item - login member only """
     if request.method == 'POST':
         item = CategoryItem(title=request.form['title'], description=request.form['description'],
                             category_id=request.form['category_id'], user_id=login_session['user_id'])
@@ -52,7 +65,13 @@ def new_category_item():
 @app.route('/catalog/<string:category_name>/<string:category_item_title>/edit', methods=['GET', 'POST'])
 @restriction.owner_required
 def edit_category_item(category_name, category_item_title, item):
-    print(item)
+    """
+    Page to edit the item - owner who created the item only
+    Args:
+        category_name: name of category
+        category_item_title: name of item
+        item: item info responded from owner_required decorator
+    """
     if not item:
         item = session.query(CategoryItem).join(Category) \
             .filter(Category.name == category_name,
@@ -73,6 +92,13 @@ def edit_category_item(category_name, category_item_title, item):
 @app.route('/catalog/<string:category_name>/<string:category_item_title>/delete', methods=['GET', 'POST'])
 @restriction.owner_required
 def delete_category_item(category_name, category_item_title, item):
+    """
+    Page to delete the item - owner who created the item only
+    Args:
+        category_name: name of category
+        category_item_title: name of item
+        item: item info responded from owner_required decorator
+    """
     if request.method == 'POST':
         if not item:
             item = session.query(CategoryItem).join(Category).filter(Category.name == category_name,

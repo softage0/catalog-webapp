@@ -35,18 +35,18 @@ def get_user_id(email):
         return None
 
 
-# Create anti-forgery state token
 @app.route('/login')
 def show_login():
+    """ Create anti-forgery state token """
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in xrange(32))
     login_session['state'] = state
     categories = session.query(Category).all()
     return render_template("login.html", STATE=state, config=config, categories=categories)
 
 
-# Disconnect based on provider
 @app.route('/disconnect')
 def disconnect():
+    """ Disconnect based on provider """
     if 'provider' in login_session:
         if login_session['provider'] == 'google':
             gdisconnect()
@@ -69,6 +69,7 @@ def disconnect():
 # Facebook Oauth 2.0
 @app.route('/fbconnect', methods=['POST'])
 def fbconnect():
+    """ Login with Facebook API """
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
         response.headers['Content-Type'] = 'application/json'
@@ -131,6 +132,7 @@ def fbconnect():
 
 @app.route('/fbdisconnect')
 def fbdisconnect():
+    """ Logout from Facebook API """
     facebook_id = login_session['facebook_id']
     # The access token must me included to successfully logout
     access_token = login_session['access_token']
@@ -143,6 +145,7 @@ def fbdisconnect():
 # Google Oauth 2.0
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
+    """ Login with Google API """
     # Validate state token
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
@@ -235,6 +238,7 @@ def gconnect():
 
 @app.route('/gdisconnect')
 def gdisconnect():
+    """ Logout from Google API """
     access_token = login_session['access_token']
     print 'In gdisconnect access token is %s', access_token
     print 'User name is: '
